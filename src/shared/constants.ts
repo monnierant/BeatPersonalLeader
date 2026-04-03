@@ -1,5 +1,7 @@
 export const BEATLEADER_API_BASE_URL = 'https://api.beatleader.com';
 
+export const CORS_PROXY_URL = 'https://corsproxy.io/?url=';
+
 export const BEATLEADER_PROFILE_URL_PATTERN =
   /beatleader\.com\/u\/(\d+)/;
 
