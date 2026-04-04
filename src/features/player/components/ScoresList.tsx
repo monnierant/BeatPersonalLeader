@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import type { RootState } from '../../../app/store';
 import { useGetPlayerScoresQuery } from '../api/playerApi';
@@ -134,12 +135,22 @@ const StyledEmptyRow = styled.td`
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
+const StyledClickableRow = styled.tr`
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.backgroundInput};
+  }
+`;
+
 interface ScoresListProps {
   readonly playerId: string;
 }
 
 export const ScoresList = ({ playerId }: ScoresListProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { sortBy, order, search, difficulty, page, pageSize } = useSelector(
     (state: RootState) => state.scoresFilter,
   );
@@ -226,7 +237,14 @@ export const ScoresList = ({ playerId }: ScoresListProps) => {
                 </tr>
               ) : (
                 data.data.map((score) => (
-                  <tr key={score.id}>
+                  <StyledClickableRow
+                    key={score.id}
+                    onClick={() =>
+                      void navigate(
+                        `/player/${playerId}/song/${score.leaderboard.song.id}`,
+                      )
+                    }
+                  >
                     <StyledTd>
                       <StyledCover
                         src={score.leaderboard.song.coverImage}
@@ -270,7 +288,7 @@ export const ScoresList = ({ playerId }: ScoresListProps) => {
                     <StyledTd>{score.missedNotes}</StyledTd>
                     <StyledTd>{score.badCuts}</StyledTd>
                     <StyledTd>{formatDate(score.timeset)}</StyledTd>
-                  </tr>
+                  </StyledClickableRow>
                 ))
               )}
             </tbody>

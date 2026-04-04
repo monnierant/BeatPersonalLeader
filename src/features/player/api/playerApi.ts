@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BEATLEADER_API_BASE_URL, CORS_PROXY_URL } from '../../../shared/constants';
 import type {
+  LeaderboardScoreGraphEntry,
   PlayerProfile,
   ScoresQueryParams,
   ScoresResponse,
@@ -23,6 +24,7 @@ const proxiedFetch: typeof fetch = (input, init) => {
   const url = getRequestUrl(input);
   return fetch(`${CORS_PROXY_URL}${encodeURIComponent(url)}`, init);
 };
+
 
 export const playerApi = createApi({
   reducerPath: 'playerApi',
@@ -48,7 +50,18 @@ export const playerApi = createApi({
         return `/player/${encodeURIComponent(playerId)}/scores?${params.toString()}`;
       },
     }),
+    getLeaderboardScoreGraph: builder.query<
+      readonly LeaderboardScoreGraphEntry[],
+      string
+    >({
+      query: (leaderboardId) =>
+        `/leaderboard/${encodeURIComponent(leaderboardId)}/scoregraph`,
+    }),
   }),
 });
 
-export const { useGetPlayerQuery, useGetPlayerScoresQuery } = playerApi;
+export const {
+  useGetPlayerQuery,
+  useGetPlayerScoresQuery,
+  useGetLeaderboardScoreGraphQuery,
+} = playerApi;

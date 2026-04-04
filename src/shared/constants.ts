@@ -1,4 +1,6 @@
-export const BEATLEADER_API_BASE_URL = 'https://api.beatleader.com';
+export const BEATLEADER_API_BASE_URL = import.meta.env.DEV
+  ? '/api'
+  : 'https://api.beatleader.com';
 
 export const CORS_PROXY_URL = 'https://corsproxy.io/?url=';
 

@@ -39,7 +39,26 @@ export interface PlayerScore {
   readonly badCuts: number;
   readonly timeset: string;
   readonly pp: number;
+  readonly accLeft: number;
+  readonly accRight: number;
+  readonly fcAccuracy: number;
+  readonly maxCombo: number;
+  readonly maxStreak: number;
+  readonly pauses: number;
+  readonly bombCuts: number;
+  readonly wallsHit: number;
   readonly leaderboard: ScoreLeaderboard;
+}
+
+export interface LeaderboardScoreGraphEntry {
+  readonly playerId: string;
+  readonly accuracy: number;
+  readonly rank: number;
+  readonly weight: number;
+  readonly pp: number;
+  readonly mistakes: number;
+  readonly modifiers: string;
+  readonly playerName: string;
 }
 
 export interface ScoreLeaderboard {
